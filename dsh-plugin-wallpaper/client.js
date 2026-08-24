@@ -121,7 +121,7 @@ window.__ModuleLoader__.load({
       var [auto, setAutoState] = useState(isAuto());
       var [url, setUrl] = useState(cfg.url || "");
       var [type, setType] = useState(cfg.type || "image");
-      var [mode, setMode] = useState(cfg.mode || "cover");
+      var [mode, setMode] = useState(cfg.mode || "contain");
       var [opacity, setOpacity] = useState(cfg.opacity || 0.5);
       var [hd, setHd] = useState(cfg.hd || false);
       var [status, setStatus] = useState("");
@@ -233,10 +233,10 @@ window.__ModuleLoader__.load({
     function bootApply() {
       injectStyles();
       if (isAuto()) {
-        applyResolved(WP_URL, "image", "cover", 0.3, false);
+        applyResolved(WP_URL, "image", "contain", 0.5, false);
       } else {
         var cfg = loadConfig();
-        if (cfg.url) applyResolved(cfg.url, cfg.type || "image", cfg.mode || "cover", cfg.opacity || 0.3, cfg.hd || false);
+        if (cfg.url) applyResolved(cfg.url, cfg.type || "image", cfg.mode || "contain", cfg.opacity || 0.5, cfg.hd || false);
       }
       // Poll the desktop wallpaper metadata; only re-apply when it changes.
       setInterval(function () {
@@ -248,7 +248,7 @@ window.__ModuleLoader__.load({
             var meta = JSON.parse(xhr.responseText || "{}");
             if (meta.path && meta.path !== lastAutoPath) {
               lastAutoPath = meta.path;
-              applyResolved(WP_URL, "image", "cover", 0.3, false);
+              applyResolved(WP_URL, "image", "contain", 0.5, false);
             }
           } catch (e) { /* server may be restarting */ }
         }

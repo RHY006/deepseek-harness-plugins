@@ -1,0 +1,8 @@
+node_modules/
+*.log
+*.jpeg
+*.jpg
+*.png
+__pycache__/
+.hvigor/
+*.pyc

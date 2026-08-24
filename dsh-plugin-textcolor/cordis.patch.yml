@@ -1,0 +1,4 @@
+# Bundle layer contributed by the dsh-plugin-textcolor package.
+- insert:
+    - id: dsh-plugin-textcolor
+      name: dsh-plugin-textcolor

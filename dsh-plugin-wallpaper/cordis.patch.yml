@@ -1,0 +1,4 @@
+# Bundle layer contributed by the dsh-plugin-wallpaper package.
+- insert:
+    - id: dsh-plugin-wallpaper
+      name: dsh-plugin-wallpaper

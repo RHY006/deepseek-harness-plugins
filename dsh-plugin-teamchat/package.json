@@ -1,0 +1,32 @@
+{
+  "name": "dsh-plugin-teamchat",
+  "version": "1.0.0",
+  "description": "DeepSeek Harness 团队聊天插件 - 多人共享聊天面板",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "relay.js",
+    "README.md"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-runtime"
+      ],
+      "platform": "web"
+    }
+  },
+  "dependencies": {
+    "ws": "^8.21.3"
+  }
+}

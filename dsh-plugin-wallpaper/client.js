@@ -228,6 +228,21 @@ window.__ModuleLoader__.load({
       document.head.appendChild(style);
     }
 
+    // ── Version check: force reload once after code change ──────────────────────
+    var PLUGIN_VER = "1.0.2";
+    var VER_KEY = "dsh_wallpaper_ver";
+    (function () {
+      try {
+        var prev = localStorage.getItem(VER_KEY);
+        if (prev && prev !== PLUGIN_VER) {
+          localStorage.setItem(VER_KEY, PLUGIN_VER);
+          location.reload(true);
+          return;
+        }
+        localStorage.setItem(VER_KEY, PLUGIN_VER);
+      } catch (e) {}
+    })();
+
     // ── Apply on load + keep transparent ────────────────────────────────────────
     var lastAutoPath = "";
     function bootApply() {

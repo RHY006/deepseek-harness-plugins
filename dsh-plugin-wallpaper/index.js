@@ -73,8 +73,16 @@ module.exports = {
       }
     }, 30000);
 
-    // Start HTTP server to serve the wallpaper image
-    var CORS = { "Access-Control-Allow-Origin": "*", "Cache-Control": "no-cache" };
+    // Start HTTP server to serve the wallpaper image + plugin JS with no-cache
+    var CORS = { "Access-Control-Allow-Origin": "*", "Cache-Control": "no-cache, no-store, must-revalidate" };
+    var NO_CACHE_HEADERS = {
+      "Access-Control-Allow-Origin": "*",
+      "Cache-Control": "no-cache, no-store, must-revalidate",
+      "Pragma": "no-cache",
+      "Expires": "0",
+      "Content-Type": "application/javascript"
+    };
+    var pluginClientPath = path.join(__dirname, "client.js");
     var server = http.createServer(function (req, res) {
       if (req.url === "/__wallpaper__" && currentWallpaperPath) {
         var ext = path.extname(currentWallpaperPath).toLowerCase();
@@ -91,6 +99,17 @@ module.exports = {
       } else if (req.url === "/__wallpaper_meta__") {
         res.writeHead(200, Object.assign({ "Content-Type": "application/json" }, CORS));
         res.end(JSON.stringify({ path: currentWallpaperPath }));
+      } else if (req.url === "/__wallpaper_client__") {
+        // Serve client.js with no-cache headers to bust browser cache
+        fs.readFile(pluginClientPath, "utf8", function (err, data) {
+          if (err) {
+            res.writeHead(404, NO_CACHE_HEADERS);
+            res.end("// not found");
+          } else {
+            res.writeHead(200, NO_CACHE_HEADERS);
+            res.end(data);
+          }
+        });
       } else {
         res.writeHead(404, CORS);
         res.end("Not found");
